@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>관용표현 떨어진다! · 양구초등학교</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Lilita+One&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+
+  :root {
+    --bg-deep:    #0b0f2a;
+    --bg-mid:     #161b3d;
+    --grid:       rgba(120, 160, 255, 0.06);
+    --ink:        #f4f6ff;
+    --ink-dim:    #8893c4;
+    --neon-lime:  #c5ff3d;
+    --neon-pink:  #ff4d8a;
+    --neon-blue:  #54d8ff;
+    --neon-amber: #ffc14d;
+    --slot-1:     #ff4d8a;
+    --slot-2:     #ffc14d;
+    --slot-3:     #54d8ff;
+    --slot-4:     #c5ff3d;
+    --good:       #6bff9c;
+    --bad:        #ff4d6d;
+    --display:    'Black Han Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    --num:        'Lilita One', 'Black Han Sans', sans-serif;
+    --body:       'Gowun Dodum', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  }
+
+  body {
+    font-family: var(--body);
+    color: var(--ink);
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(84, 216, 255, 0.12), transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(255, 77, 138, 0.10), transparent 50%),
+      linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 100%);
+    background-attachment: fixed;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #app { position: relative; height: 100vh; width: 100vw; z-index: 1; }
+
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4vh 4vw;
+  }
+  .screen.active { display: flex; }
+
+  /* ======== Start Screen ======== */
+  #start-screen .badge {
+    font-family: var(--num);
+    font-size: clamp(18px, 2vw, 28px);
+    color: var(--neon-lime);
+    letter-spacing: 0.3em;
+    margin-bottom: 1.5vh;
+    text-shadow: 0 0 10px rgba(197, 255, 61, 0.2);
+  }
+  #start-screen h1 {
+    font-family: var(--display);
+    font-size: clamp(36px, 7vw, 110px);
+    font-weight: normal;
+    line-height: 0.95;
+    text-align: center;
+    background: linear-gradient(180deg, #fff 0%, #c5ff3d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 4px 20px rgba(197, 255, 61, 0.1);
+    margin-bottom: 2vh;
+  }
+  #start-screen .subtitle {
+    font-size: clamp(16px, 2vw, 26px);
+    color: var(--ink-dim);
+    margin-bottom: 4vh;
+    text-align: center;
+  }
+
+  .mode-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2vh;
+    margin-bottom: 4vh;
+    width: min(900px, 90vw);
+  }
+  .mode-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    padding: 3vh 2vw;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    color: var(--ink);
+    font-family: var(--body);
+  }
+  .mode-btn:hover, .mode-btn.selected {
+    background: rgba(197, 255, 61, 0.08);
+    border-color: var(--neon-lime);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(197, 255, 61, 0.15);
+  }
+  .mode-btn .icon {
+    font-size: clamp(32px, 4vw, 64px);
+    display: block;
+    margin-bottom: 1vh;
+    line-height: 1;
+  }
+  .mode-btn .label {
+    font-family: var(--display);
+    font-size: clamp(15px, 1.6vw, 24px);
+    margin-bottom: 0.5vh;
+    white-space: nowrap;
+  }
+  .mode-btn .desc {
+    font-size: clamp(13px, 1.1vw, 17px);
+    color: var(--ink-dim);
+    white-space: nowrap;
+  }
+
+  .start-btn {
+    font-family: var(--display);
+    font-size: clamp(22px, 2.8vw, 44px);
+    background: var(--neon-lime);
+    color: var(--bg-deep);
+    border: none;
+    padding: 2vh 6vw;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 0 24px rgba(197, 255, 61, 0.3), 0 8px 0 #8fc024;
+    transition: all 0.15s ease;
+    letter-spacing: 0.05em;
+  }
+  .start-btn:hover { transform: translateY(-3px); box-shadow: 0 0 80px rgba(197, 255, 61, 0.7), 0 11px 0 #8fc024; }
+  .start-btn:active { transform: translateY(4px); box-shadow: 0 0 60px rgba(197, 255, 61, 0.5), 0 4px 0 #8fc024; }
+
+  /* ======== Game Screen ======== */
+  #game-screen { padding: 0; display: none; }
+  #game-screen.active { display: flex; }
+
+  #motto-bar {
+    width: 100%;
+    padding: 1.2vh 3vw;
+    background: rgba(197, 255, 61, 0.07);
+    border-bottom: 1px solid rgba(197, 255, 61, 0.2);
+    text-align: center;
+    font-family: var(--display);
+    font-size: clamp(18px, 2.4vw, 34px);
+    color: var(--neon-lime);
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .hud {
+    width: 100%;
+    padding: 2vh 3vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+  .hud-block { display: flex; flex-direction: column; align-items: center; gap: 0.4vh; }
+  .hud-block .label { font-size: clamp(13px, 1.3vw, 18px); color: var(--ink-dim); letter-spacing: 0.2em; text-transform: uppercase; }
+  .hud-block .value { font-family: var(--num); font-size: clamp(30px, 3.8vw, 54px); line-height: 1; }
+  #score-value { color: var(--neon-lime); }
+  #level-value { color: var(--neon-blue); }
+  #combo-value { color: var(--neon-amber); }
+  #lives-value { color: var(--neon-pink); font-size: clamp(26px, 3vw, 44px); letter-spacing: 0.1em; }
+
+  .play-area { flex: 1; width: 100%; position: relative; overflow: hidden; }
+
+  .falling-block {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, #ffffff 0%, #f0f3ff 100%);
+    color: var(--bg-deep);
+    padding: 2vh 3vw;
+    border-radius: 18px;
+    box-shadow: 0 0 20px rgba(197, 255, 61, 0.15), 0 12px 0 rgba(0,0,0,0.2), inset 0 -4px 0 rgba(0,0,0,0.08);
+    font-family: var(--display);
+    font-size: clamp(16px, 2vw, 28px);
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    width: 80vw;
+    max-width: 900px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    will-change: top, left, transform;
+    transition: left 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 5;
+  }
+  .falling-block.correct {
+    background: linear-gradient(180deg, #c5ff3d 0%, #6bff9c 100%);
+    box-shadow: 0 0 40px rgba(197, 255, 61, 0.5);
+    animation: pop 0.45s ease forwards;
+  }
+  .falling-block.wrong {
+    background: linear-gradient(180deg, #ff4d6d 0%, #ff4d8a 100%);
+    color: #fff;
+    box-shadow: 0 0 80px rgba(255, 77, 109, 0.8);
+    animation: shake 0.4s ease;
+  }
+  @keyframes pop {
+    0%   { transform: translateX(-50%) scale(1);    opacity: 1; }
+    40%  { transform: translateX(-50%) translateY(-30px) scale(1.08, 1.05); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(-60px) scale(0.8, 0.6);  opacity: 0; }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(-50%); }
+    25% { transform: translateX(-58%); }
+    75% { transform: translateX(-42%); }
+  }
+
+  .slots {
+    display: flex;
+    width: 100%;
+    height: 18vh;
+    gap: 1.2vw;
+    padding: 0 3vw 2vh;
+    flex-shrink: 0;
+  }
+  .slot {
+    flex: 1;
+    border-radius: 16px 16px 6px 6px;
+    border: 3px solid;
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .slot::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 7px;
+    background: currentColor;
+    border-radius: 16px 16px 0 0;
+  }
+  .slot:nth-child(1) { color: var(--slot-1); }
+  .slot:nth-child(2) { color: var(--slot-2); }
+  .slot:nth-child(3) { color: var(--slot-3); }
+  .slot:nth-child(4) { color: var(--slot-4); }
+  .slot:hover { background: rgba(255,255,255,0.07); transform: translateY(-4px); }
+  .slot-number {
+    font-family: var(--body);
+    font-size: clamp(16px, 2vw, 28px);
+    font-weight: 400;
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255,255,255,0.3);
+    line-height: 1.3;
+    word-break: keep-all;
+    text-align: center;
+    padding: 6px 10px;
+  }
+  .slot.correct { background: var(--good); animation: slot-flash-good 0.6s ease; }
+  .slot.wrong { background: var(--bad); animation: slot-flash-bad 0.6s ease; }
+  .slot.show-correct { background: rgba(107,255,156,0.3); border-color: var(--good); animation: pulse 0.6s ease; }
+  @keyframes slot-flash-good { 0%,100%{} 50%{transform:translateY(-8px) scale(1.05);} }
+  @keyframes slot-flash-bad  { 0%,100%{} 50%{transform:translateY(2px);} }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 var(--good);} 50%{box-shadow:0 0 60px 20px rgba(107,255,156,0.6);} }
+
+  .combo-banner {
+    position: absolute;
+    top: 30%; left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--display);
+    font-size: clamp(40px, 7vw, 110px);
+    color: var(--neon-amber);
+    text-shadow: 0 0 15px rgba(255,193,77,0.4);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 20;
+  }
+  .combo-banner.show { animation: comboPop 1.2s ease; }
+  @keyframes comboPop {
+    0%   { transform: translate(-50%, 20px) scale(0.5); opacity: 0; }
+    20%  { transform: translate(-50%, 0) scale(1.2); opacity: 1; }
+    80%  { transform: translate(-50%, 0) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -40px) scale(0.9); opacity: 0; }
+  }
+
+  .pause-btn {
+    position: fixed;
+    bottom: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,193,77,0.15);
+    border: 2px solid var(--neon-amber);
+    color: var(--neon-amber);
+    width: auto;
+    height: auto;
+    min-width: 80px;
+    padding: 8px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: var(--num);
+    font-size: clamp(13px, 1.4vw, 18px);
+    letter-spacing: 0.1em;
+    z-index: 100;
+    display: none;
+  }
+  .pause-btn.show { display: block; }
+  .pause-btn:hover { background: rgba(255,193,77,0.3); }
+
+  /* ======== Game Over ======== */
+  #gameover-screen .result-card {
+    background: rgba(255,255,255,0.03);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 28px;
+    padding: 5vh 6vw;
+    text-align: center;
+    backdrop-filter: blur(20px);
+  }
+  #gameover-screen h2 {
+    font-family: var(--display);
+    font-size: clamp(36px, 5.5vw, 90px);
+    color: var(--neon-pink);
+    margin-bottom: 2vh;
+    line-height: 1;
+  }
+  #gameover-screen .final-score-label {
+    font-size: clamp(16px, 1.8vw, 24px);
+    color: var(--ink-dim);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1vh;
+  }
+  #gameover-screen .final-score {
+    font-family: var(--num);
+    font-size: clamp(72px, 11vw, 170px);
+    color: var(--neon-lime);
+    line-height: 1;
+    margin-bottom: 3vh;
+    text-shadow: 0 0 20px rgba(197,255,61,0.2);
+  }
+  .stats { display: flex; gap: 4vw; justify-content: center; margin-bottom: 4vh; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-label { font-size: clamp(14px, 1.4vw, 20px); color: var(--ink-dim); letter-spacing: 0.2em; margin-bottom: 0.5vh; }
+  .stat-value { font-family: var(--num); font-size: clamp(32px, 4vw, 56px); }
+  .stat-value.good { color: var(--good); }
+  .stat-value.bad  { color: var(--bad); }
+  .stat-value.neutral { color: var(--neon-blue); }
+  .actions { display: flex; gap: 2vw; justify-content: center; flex-wrap: wrap; }
+  .secondary-btn {
+    font-family: var(--display);
+    font-size: clamp(20px, 2.2vw, 32px);
+    background: transparent;
+    color: var(--ink);
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 1.5vh 3vw;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .secondary-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--neon-lime); }
+
+  .confetti { position: absolute; width: 12px; height: 12px; border-radius: 2px; pointer-events: none; z-index: 15; }
+
+  .signature {
+    position: fixed; bottom: 1vh; left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--num);
+    font-size: clamp(10px, 0.9vw, 14px);
+    color: var(--ink-dim);
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* ======== 반응형 ======== */
+  @media (max-width: 600px) {
+    #start-screen h1 { font-size: clamp(36px, 11vw, 64px); }
+    #start-screen .subtitle { font-size: 13px; }
+    .mode-grid { grid-template-columns: 1fr; gap: 10px; width: 92vw; }
+    .mode-btn { padding: 14px 16px; display: flex; align-items: center; gap: 14px; text-align: left; border-radius: 14px; }
+    .mode-btn .icon { font-size: 28px; margin-bottom: 0; flex-shrink: 0; }
+    .mode-btn .label { font-size: 18px; white-space: nowrap; }
+    .mode-btn .desc  { font-size: 12px; white-space: nowrap; }
+    .start-btn { font-size: 22px; padding: 14px 40px; }
+
+    #motto-bar { font-size: 14px; padding: 8px 12px; }
+    .hud { padding: 8px 12px; }
+    .hud-block .label { font-size: 11px; }
+    .hud-block .value { font-size: 22px; }
+    #lives-value { font-size: 20px; }
+
+    .falling-block {
+      width: 92vw;
+      height: 70px;
+      font-size: 16px;
+    }
+
+    .slots { height: 24vh; gap: 8px; padding: 0 10px 10px; }
+    .slot-number { font-size: 13px; padding: 4px 6px; }
+
+    #gameover-screen .result-card { padding: 28px 20px; }
+    #gameover-screen h2 { font-size: 36px; }
+    #gameover-screen .final-score { font-size: 72px; }
+    .stat-label { font-size: 11px; }
+    .stat-value { font-size: 26px; }
+    .stats { gap: 5vw; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- START -->
+  <section id="start-screen" class="screen active">
+    <div class="badge">양구초 ★ 국어 ARCADE</div>
+    <h1>관용표현이 떨어진다!</h1>
+    <p class="subtitle">6학년 1학기 국어(나) · 자주 쓰는 관용표현 — 정답 슬롯에 떨어뜨려라!</p>
+
+    <div class="mode-grid">
+      <div class="mode-btn selected" data-mode="blank">
+        <span class="icon">✏️</span>
+        <div class="label">빈칸 채우기</div>
+        <div class="desc">신체 부위를 맞혀봐요</div>
+      </div>
+      <div class="mode-btn" data-mode="mean2expr">
+        <span class="icon">💡</span>
+        <div class="label">속뜻 → 관용표현</div>
+        <div class="desc">뜻을 보고 표현 맞히기</div>
+      </div>
+      <div class="mode-btn" data-mode="situation">
+        <span class="icon">📖</span>
+        <div class="label">예문 보고 찾기</div>
+        <div class="desc">상황에 맞는 표현 고르기</div>
+      </div>
+    </div>
+
+    <button class="start-btn" id="start-btn">▶ 시작</button>
+  </section>
+
+  <!-- GAME -->
+  <section id="game-screen" class="screen">
+    <div id="motto-bar">통계가 더해지면 미신은 과학이 됩니다.</div>
+    <div class="hud">
+      <div class="hud-block"><div class="label">SCORE</div><div class="value" id="score-value">0</div></div>
+      <div class="hud-block"><div class="label">LEVEL</div><div class="value" id="level-value">1</div></div>
+      <div class="hud-block"><div class="label">COMBO</div><div class="value" id="combo-value">×0</div></div>
+      <div class="hud-block"><div class="label">LIVES</div><div class="value" id="lives-value">♥♥♥</div></div>
+      <div class="hud-block">
+        <button id="home-game-btn" style="
+          background:rgba(255,255,255,0.08);
+          border:2px solid rgba(255,255,255,0.2);
+          color:var(--ink-dim);
+          border-radius:10px;
+          padding:6px 14px;
+          font-family:var(--body);
+          font-size:clamp(12px,1.2vw,16px);
+          cursor:pointer;
+          transition:all .2s;
+        ">🏠 처음으로</button>
+      </div>
+      <div class="hud-block">
+        <button id="pause-btn" style="
+          background:rgba(255,193,77,0.12);
+          border:2px solid var(--neon-amber);
+          color:var(--neon-amber);
+          border-radius:10px;
+          padding:6px 16px;
+          font-family:var(--num);
+          font-size:clamp(13px,1.3vw,18px);
+          cursor:pointer;
+          transition:all .2s;
+          display:none;
+        ">II</button>
+      </div>
+    </div>
+    <div class="play-area" id="play-area">
+      <div class="falling-block" id="falling-block">loading...</div>
+      <div class="combo-banner" id="combo-banner"></div>
+    </div>
+    <div class="slots" id="slots">
+      <div class="slot" data-index="0"><div class="slot-number">-</div></div>
+      <div class="slot" data-index="1"><div class="slot-number">-</div></div>
+      <div class="slot" data-index="2"><div class="slot-number">-</div></div>
+      <div class="slot" data-index="3"><div class="slot-number">-</div></div>
+    </div>
+
+    <!-- 일시정지 오버레이 -->
+    <div id="pause-overlay" style="
+      display:none;
+      position:absolute;
+      inset:0;
+      background:rgba(10,16,30,0.25);
+      z-index:50;
+      flex-direction:column;
+      align-items:flex-end;
+      justify-content:flex-start;
+      padding:12px 16px;
+      pointer-events:none;
+    ">
+      <div style="
+        font-family:var(--body);
+        font-size:clamp(12px,1.2vw,16px);
+        color:var(--neon-amber);
+        letter-spacing:0.15em;
+        opacity:0.8;
+      ">⏸ 일시정지</div>
+    </div>
+  </section>
+
+  <!-- GAME OVER -->
+  <section id="gameover-screen" class="screen">
+    <div class="result-card">
+      <h2>GAME OVER</h2>
+      <div class="final-score-label">최종 점수</div>
+      <div class="final-score" id="final-score">0</div>
+      <div class="stats">
+        <div class="stat"><div class="stat-label">맞은 문제</div><div class="stat-value good" id="stat-correct">0</div></div>
+        <div class="stat"><div class="stat-label">틀린 문제</div><div class="stat-value bad"  id="stat-wrong">0</div></div>
+        <div class="stat"><div class="stat-label">최대 콤보</div><div class="stat-value neutral" id="stat-combo">0</div></div>
+        <div class="stat"><div class="stat-label">최고 레벨</div><div class="stat-value neutral" id="stat-level">1</div></div>
+      </div>
+      <div class="actions">
+        <button class="start-btn" id="retry-btn">다시 도전</button>
+        <button class="secondary-btn" id="home-btn">처음으로</button>
+      </div>
+    </div>
+  </section>
+
+  <button class="pause-btn-old" id="pause-btn-old" style="display:none"></button>
+</div>
+
+<div class="signature" id="signature">양구초등학교 이영직 선생님 · 6학년 1학기 국어(나)</div>
+
+<script>
+const $  = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+const startScreen    = $('#start-screen');
+const gameScreen     = $('#game-screen');
+const gameoverScreen = $('#gameover-screen');
+const startBtn       = $('#start-btn');
+const retryBtn       = $('#retry-btn');
+const homeBtn        = $('#home-btn');
+const pauseBtn       = $('#pause-btn');
+const fallingBlock   = $('#falling-block');
+const playArea       = $('#play-area');
+const slotsEl        = $('#slots');
+const slotEls        = $$('.slot');
+const comboBanner    = $('#combo-banner');
+const scoreEl  = $('#score-value');
+const levelEl  = $('#level-value');
+const comboEl  = $('#combo-value');
+const livesEl  = $('#lives-value');
+
+// ── 관용표현 121개 + 고정 오답 ──
+const ALL = [
+  {e:"눈이 번쩍 뜨이다",         m:"정신이 갑자기 들다",                          d:["재미나 의욕이 없어지다","마음이 편안해지다","몹시 놀라다"]},
+  {e:"발 없는 말이 천리 간다",    m:"말은 순식간에 멀리까지 퍼지므로 말을 삼가야 함", d:["좋은 말은 힘이 세다","말을 잘하면 일이 잘 풀림","말수가 적을수록 좋음"]},
+  {e:"낮말은 새가 듣고 밤말은 쥐가 듣는다", m:"비밀은 결국 지켜지지 않으니 늘 말조심해야 함", d:["낮과 밤에 하는 일이 다름","열심히 공부해야 한다","동물도 말을 알아들음"]},
+  {e:"세 살 버릇 여든까지 간다",  m:"어릴 때 몸에 밴 버릇은 쉽게 고쳐지지 않음",   d:["나이가 들면 습관이 바뀜","세 살이 중요한 나이임","나쁜 버릇은 금방 고쳐짐"]},
+  {e:"손발이 맞다",               m:"함께 일할 때 의견이나 방법 등이 서로 맞다",    d:["몸이 건강하다","손과 발이 크다","함께 달리기를 잘한다"]},
+  {e:"발이 넓다",                 m:"사귀어 아는 사람이 많거나 교제 관계가 넓다",   d:["발 크기가 크다","빨리 걷는다","여행을 좋아한다"]},
+  {e:"눈이 동그래지다",           m:"놀라거나 의아하여 눈을 크게 뜨다",             d:["눈이 나빠지다","잠이 오다","무언가에 집중하다"]},
+  {e:"말꼬리를 물고 늘어지다",    m:"말의 한두 마디만 빌미 삼아 꼬치꼬치 따지고 들다", d:["말을 끝까지 듣다","말을 중간에 끊다","말을 잘 이해하다"]},
+  {e:"쇠뿔도 단김에 빼라",        m:"무슨 일이든 망설이지 말고 곧 행동으로 옮겨라", d:["힘든 일은 천천히 하라","소를 잘 키워야 한다","준비를 철저히 해라"]},
+  {e:"김이 식다",                 m:"재미나 의욕이 없어지다",                       d:["음식이 차가워지다","날씨가 흐려지다","기운이 넘치다"]},
+  {e:"간 떨어지다",               m:"순간적으로 몹시 놀라다",                       d:["배가 고프다","용기가 생기다","기운이 빠지다"]},
+  {e:"손이 크다",                 m:"씀씀이가 후하고 크다",                         d:["힘이 세다","손 크기가 크다","일을 빨리 한다"]},
+  {e:"손꼽아 기다리다",           m:"기대에 차거나 안타까운 마음으로 날짜를 꼽으며 기다리다", d:["손가락을 세다","손이 아프다","지루하게 기다리다"]},
+  {e:"천하를 얻은 듯",            m:"매우 기쁘고 만족스러움을 이르는 말",           d:["세상이 내 것 같다","욕심이 많다","힘이 강하다"]},
+  {e:"눈 깜짝할 사이",            m:"매우 짧은 동안",                               d:["잠깐 졸다","눈이 아프다","순식간에 놀라다"]},
+  {e:"금이 가다",                 m:"서로의 사이나 친분이 벌어지거나 틀어지다",     d:["물건이 깨지다","돈이 생기다","관계가 좋아지다"]},
+  {e:"막을 열다",                 m:"어떤 행사나 일이 시작하다",                    d:["창문을 열다","비밀을 알다","공연이 끝나다"]},
+  {e:"간이 크다",                 m:"겁이 없고 매우 대담하다",                      d:["배가 크다","건강하다","소심하다"]},
+  {e:"귀가 얇다",                 m:"속는 줄도 모르고 남의 말을 그대로 잘 믿다",    d:["귀가 작다","잘 듣지 못한다","비밀을 잘 지킨다"]},
+  {e:"눈에 띄다",                 m:"두드러지게 드러나다",                           d:["눈이 아프다","잘 보이지 않다","관심이 없다"]},
+  {e:"물 쓰듯 쓰다",              m:"돈이나 물건을 함부로 매우 헤프게 쓰는 모양",   d:["아껴서 쓰다","청소를 열심히 하다","물을 절약하다"]},
+  {e:"애간장이 타다",             m:"몹시 안타깝고 초조하여 걱정이 되다",           d:["배가 아프다","기분이 좋다","마음이 편하다"]},
+  {e:"하루에도 열두 번",          m:"어떤 일이 매우 빈번하게 일어남을 이르는 말",   d:["시간이 빨리 간다","하루가 길다","일을 열심히 한다"]},
+  {e:"어금니를 악물다",           m:"고통이나 분노를 참느라 굳은 의지를 나타내다",  d:["이가 아프다","밥을 많이 먹다","치과에 가다"]},
+  {e:"하나만 알고 둘은 모른다",   m:"한 측면만 보고 두루 보지 못하는 어리석음",     d:["공부를 못한다","수학을 잘한다","기억력이 나쁘다"]},
+  {e:"가는 말이 고와야 오는 말이 곱다", m:"남에게 좋게 대해야 자기에게도 좋은 반응이 돌아온다", d:["말을 예쁘게 해야 한다","여행을 즐겨야 한다","말이 빠르면 좋다"]},
+  {e:"공든 탑이 무너지랴",        m:"힘을 다해 정성껏 한 일은 쉽게 헛되지 않음",   d:["탑은 무너지지 않는다","건물을 잘 지어야 한다","공부는 쉽게 된다"]},
+  {e:"머리를 맞대다",             m:"함께 의논을 하다",                              d:["싸우다","머리를 다치다","생각이 같다"]},
+  {e:"발 벗고 나서다",            m:"적극적으로 나서거나 적극적인 태도를 취하다",   d:["신발을 벗다","도망가다","천천히 행동하다"]},
+  {e:"손발을 맞추다",             m:"어떤 일을 할 때 서로 잘 협조하다",             d:["운동을 하다","손과 발을 씻다","경쟁하다"]},
+  {e:"백지장도 맞들면 낫다",      m:"아무리 쉬운 일도 함께 협력하면 훨씬 효과적임", d:["종이는 가볍다","혼자 하는 게 빠르다","종이를 아껴야 한다"]},
+  {e:"천리 길도 한 걸음부터",     m:"아무리 큰일도 첫 시작은 작은 일부터 비롯된다", d:["먼 길은 포기해야 한다","걸음이 빨라야 한다","준비 없이 시작하라"]},
+  {e:"말 한마디에 천 냥 빚도 갚는다", m:"말만 잘하면 어려운 일도 해결할 수 있다", d:["돈이 많으면 된다","말을 많이 해야 한다","빚은 갚기 어렵다"]},
+  {e:"벼는 익을수록 고개를 숙인다", m:"수양을 쌓은 사람일수록 더욱 겸손해짐",     d:["농사를 열심히 지어야 한다","고개를 숙이면 안 된다","벼가 크면 무겁다"]},
+  {e:"눈을 돌리다",               m:"관심을 돌리다",                                d:["눈이 아프다","다른 곳을 보다","잠을 자다"]},
+  {e:"눈을 붙이다",               m:"잠을 자다",                                    d:["눈에 뭔가 붙이다","눈이 아프다","관심을 갖다"]},
+  {e:"눈이 높다",                 m:"수준이 높은 것에만 관심을 두고 여간한 것은 시시하게 여기다", d:["키가 크다","시력이 좋다","눈이 크다"]},
+  {e:"눈이 멀다",                 m:"마음을 빼앗겨 이성을 잃다",                    d:["시력을 잃다","눈이 나쁘다","잠이 오다"]},
+  {e:"눈에 거슬리다",             m:"보기에 마뜩하지 않아 불쾌한 느낌이 있다",      d:["눈이 아프다","보기가 좋다","관심이 생기다"]},
+  {e:"눈도 깜짝 안 한다",         m:"조금도 놀라지 않고 태연하다",                  d:["눈이 피곤하다","매우 놀라다","눈을 자주 깜빡이다"]},
+  {e:"눈코 뜰 새 없다",           m:"정신을 차릴 수 없이 몹시 바쁘다",              d:["눈과 코가 작다","여유롭다","쉬고 싶다"]},
+  {e:"눈에 불을 켜다",            m:"탐을 내어 눈을 빛내다",                        d:["불을 보다","눈이 빨개지다","잠이 깨다"]},
+  {e:"눈에 차다",                 m:"마음에 흡족하다",                               d:["눈에 뭔가 들어가다","마음에 안 들다","눈이 충혈되다"]},
+  {e:"눈에 흙이 들어가다",        m:"죽어 땅에 묻히다",                              d:["눈이 아프다","흙장난을 하다","눈이 더러워지다"]},
+  {e:"입을 모으다",               m:"둘 이상의 사람이 모두 한결같이 말하다",         d:["입술을 모으다","말을 안 하다","혼자 말하다"]},
+  {e:"입을 막다",                 m:"남이 하려는 말을 못 하게 하다",                 d:["입을 다물다","말을 잘 하다","큰 소리로 말하다"]},
+  {e:"입만 아프다",               m:"애써 얘기해도 상대방에게 받아들여지지 않아 보람이 없다", d:["이가 아프다","말을 너무 많이 하다","발음이 나쁘다"]},
+  {e:"입맛대로 하다",             m:"마음 내키는 대로 하다",                         d:["맛있는 것만 먹다","규칙대로 하다","음식을 가리다"]},
+  {e:"입이 무겁다",               m:"말수가 적거나 아는 이야기를 함부로 옮기지 않는다", d:["음식을 많이 먹다","말을 잘 못하다","입이 크다"]},
+  {e:"입이 짧다",                 m:"음식을 적게 먹거나 가려 먹는 버릇이 있다",      d:["말을 짧게 하다","입이 작다","말이 빠르다"]},
+  {e:"입을 맞추다",               m:"서로의 의견이 같도록 조정하다",                 d:["뽀뽀하다","노래를 맞추다","말다툼하다"]},
+  {e:"이를 갈다",                 m:"분에 못 이겨 상대방에게 독한 마음을 먹고 벼르다", d:["이를 닦다","이가 아프다","화를 참다"]},
+  {e:"코가 높다",                 m:"잘난 체하고 뽐내는 기세가 있다",               d:["코가 크다","냄새를 잘 맡다","감기에 걸리다"]},
+  {e:"코를 납작하게 만들다",      m:"기를 죽이다",                                  d:["코를 만지다","코를 다치다","코를 씻다"]},
+  {e:"코 묻은 돈",                m:"어린아이가 가지고 있는 적은 돈",               d:["더러운 돈","훔친 돈","큰돈"]},
+  {e:"코가 꿰이다",               m:"약점이 잡히다",                                d:["코를 다치다","냄새를 못 맡다","코감기에 걸리다"]},
+  {e:"코끝이 찡하다",             m:"몹시 감동하였거나 슬퍼하다",                   d:["코가 아프다","감기에 걸리다","냄새가 나다"]},
+  {e:"누구 코에 붙이겠는가",      m:"여러 사람에게 나눌 물건이 너무 적을 때 이르는 말", d:["코를 붙이다","누군가를 찾다","물건이 넘치다"]},
+  {e:"귀가 아프다",               m:"너무 여러 번 들어서 듣기가 싫다",              d:["귀를 다치다","잘 들린다","귀가 가렵다"]},
+  {e:"귀에 익다",                 m:"어떤 말이나 소리를 자주 들어 친숙하다",         d:["귀를 만지다","처음 듣다","귀가 가렵다"]},
+  {e:"귀를 세우다",               m:"듣기 위해 신경을 곤두세우다",                  d:["귀가 크다","귀를 만지다","귀가 아프다"]},
+  {e:"귀를 기울이다",             m:"적극적인 관심을 가지고 듣다",                  d:["귀가 무겁다","무시하다","귀를 막다"]},
+  {e:"귀청 떨어지다",             m:"소리가 몹시 크다",                              d:["귀를 다치다","소리가 작다","귀가 간지럽다"]},
+  {e:"손에 익다",                 m:"일이 손에 익숙해지다",                          d:["손을 자주 씻다","손을 다치다","처음 해보다"]},
+  {e:"손을 거치다",               m:"다른 사람의 노력으로 손질되다",                 d:["손을 씻다","손이 더럽다","혼자 만들다"]},
+  {e:"손을 끊다",                 m:"교제나 거래 관계를 중단하다",                   d:["손을 다치다","악수하다","손이 아프다"]},
+  {e:"손을 뻗치다",               m:"활동 범위를 넓히거나 도움이 멀리까지 미치게 하다", d:["손을 뻗어 잡다","스트레칭하다","손이 길다"]},
+  {e:"손바닥으로 하늘 가리기",    m:"아무리 숨기려 해도 소용없음을 이르는 말",       d:["손이 크다","하늘을 보다","그늘을 만들다"]},
+  {e:"발을 구르다",               m:"안타까워하거나 다급해 하다",                    d:["발을 다치다","춤을 추다","발이 차갑다"]},
+  {e:"발을 끊다",                 m:"왕래를 중단하거나 관계를 끊다",                 d:["발을 다치다","발이 아프다","빨리 걷다"]},
+  {e:"발을 빼다",                 m:"관계를 끊고 물러나다",                          d:["발이 빠지다","발을 다치다","발이 작다"]},
+  {e:"발바닥에 불이 나다",        m:"부리나케 여기저기 돌아다니다",                  d:["발이 뜨겁다","발을 다치다","천천히 걷다"]},
+  {e:"다리를 뻗고 자다",          m:"걱정과 시름을 잊고 마음 편하게 자다",           d:["다리가 길다","다리를 다치다","잠을 못 자다"]},
+  {e:"팔을 걷어붙이다",           m:"무슨 일에 적극적이다",                          d:["옷을 입다","팔이 아프다","포기하다"]},
+  {e:"간이 부었다",               m:"겁도 없이 대담해져서 분수 이상의 말이나 행동을 하다", d:["몸이 아프다","겁이 많다","조심스럽다"]},
+  {e:"간이 배 밖으로 나오다",     m:"무서워하지 않고 대든다는 뜻",                   d:["몸이 아프다","배가 고프다","무서워하다"]},
+  {e:"간이 콩알만 해지다",        m:"몹시 두려워지거나 무서워지다",                  d:["용감해지다","배가 고프다","몸이 작아지다"]},
+  {e:"간이 서늘하다",             m:"뜻밖의 위험한 일을 당하여 몹시 놀라거나 섬뜩해지다", d:["날씨가 춥다","기분이 좋다","몸이 건강하다"]},
+  {e:"간에 기별도 안 가다",       m:"먹은 것이 양에 차지 않다",                      d:["배가 부르다","소식이 없다","건강하다"]},
+  {e:"배가 등가죽에 붙었다",      m:"먹은 것이 없어서 배가 몹시 허기지다",           d:["배가 부르다","등이 아프다","살이 쪘다"]},
+  {e:"머리를 쥐어짜다",           m:"몹시 애를 써서 궁리하다",                       d:["머리가 아프다","머리를 감다","생각 없이 행동하다"]},
+  {e:"머리를 식히다",             m:"긴장을 풀고 마음을 편안하게 하다",              d:["머리가 뜨겁다","공부를 더 하다","머리를 감다"]},
+  {e:"목에 힘을 주다",            m:"거만하게 굴거나 남을 깔보는 태도를 취하다",     d:["목이 아프다","목을 스트레칭하다","겸손하다"]},
+  {e:"목이 빠지다",               m:"몹시 애타게 기다리다",                          d:["목을 다치다","목이 아프다","기다리기 싫다"]},
+  {e:"얼굴이 뜨겁다",             m:"남 보기 무안하거나 부끄러워 얼굴이 화끈거릴 정도이다", d:["날씨가 덥다","얼굴이 붉다","열이 나다"]},
+  {e:"얼굴이 두껍다",             m:"부끄러움을 모르고 염치가 없다",                 d:["얼굴이 크다","피부가 두껍다","얼굴이 예쁘다"]},
+  {e:"어안이 벙벙하다",           m:"뜻밖에 기막힌 일을 당하여 어리둥절하다",        d:["말을 잘 못하다","기분이 좋다","눈이 크다"]},
+  {e:"미역국 먹다",               m:"시험에 떨어지다",                               d:["밥을 먹다","몸이 아프다","시험에 합격하다"]},
+  {e:"꼬리를 내리다",             m:"상대의 압력에 의해 자신의 주장을 꺾고 순응하다", d:["용감하게 맞서다","동물 꼬리가 내려가다","기분이 좋다"]},
+  {e:"꼬리에 꼬리를 물다",        m:"계속 이어지다",                                 d:["동물이 싸우다","끊어지다","한 번에 끝나다"]},
+  {e:"꼬리가 길다",               m:"못된 짓을 너무 오래 계속하다",                  d:["동물 꼬리가 길다","착한 일을 하다","오래 기다리다"]},
+  {e:"선심을 쓰다",               m:"남에게 착한 마음을 베풀다",                     d:["돈을 낭비하다","선물을 받다","인색하게 굴다"]},
+  {e:"마음을 먹다",               m:"무엇을 하려고 마음속으로 작정하다",             d:["음식을 먹다","마음이 아프다","포기하다"]},
+  {e:"마른 침을 삼키다",          m:"몹시 긴장하거나 초조해하다",                    d:["목이 마르다","음식을 먹다","편안하다"]},
+  {e:"맥이 풀리다",               m:"기운이나 긴장이 풀어지다",                      d:["힘이 생기다","맥박이 빠르다","긴장되다"]},
+  {e:"시치미를 떼다",             m:"자기가 하고도 하지 않은 체하거나 알고도 모르는 체하다", d:["솔직하게 말하다","잘못을 인정하다","시치미가 맛있다"]},
+  {e:"게 눈 감추듯",              m:"음식을 무척 빨리 먹는 것을 이르는 말",          d:["천천히 먹다","게를 키우다","눈을 감다"]},
+  {e:"숨을 죽이다",               m:"숨소리가 들리지 않게 조용히 하다",              d:["숨이 막히다","크게 숨쉬다","달리기하다"]},
+  {e:"숨을 돌리다",               m:"가쁜 숨을 가라앉히거나 바쁜 중에 잠시 휴식을 취하다", d:["숨이 막히다","계속 바쁘다","운동하다"]},
+  {e:"달밤에 체조",               m:"격에 맞지 않는 짓을 하다",                      d:["밤에 운동하다","달을 보다","건강을 챙기다"]},
+  {e:"뜸을 들이다",               m:"잘 이루어지도록 충분히 무르익게 하다",          d:["밥을 짓다","서두르다","뜸을 뜨다"]},
+  {e:"불난 집에 부채질한다",      m:"다른 사람이 어려울 때 더 어렵게 하거나 화나게 한다", d:["불을 끄다","도움을 주다","부채를 쓰다"]},
+  {e:"고춧가루 뿌리다",           m:"훼방을 놓다",                                   d:["요리를 하다","도움을 주다","고추를 키우다"]},
+  {e:"깨가 쏟아지다",             m:"오붓하거나 몹시 아기자기하여 재미가 나다",      d:["깨를 수확하다","사이가 나쁘다","힘들다"]},
+  {e:"동에 번쩍 서에 번쩍하다",   m:"정처 없이 이곳저곳에 출몰하는 모양을 이르는 말", d:["동쪽과 서쪽을 여행하다","번개가 치다","한곳에 머물다"]},
+  {e:"마음은 굴뚝같다",           m:"바라거나 그리워하는 마음이 매우 절실하다",      d:["마음이 차갑다","굴뚝을 좋아하다","마음이 없다"]},
+  {e:"물로 보다",                 m:"하찮게 보거나 쉽게 생각하다",                   d:["물을 바라보다","존중하다","신중하게 보다"]},
+  {e:"물에 빠진 생쥐",            m:"물에 흠뻑 젖어 몰골이 초췌한 모양을 이르는 말", d:["수영을 잘하다","생쥐를 키우다","깔끔한 모양"]},
+  {e:"물을 끼얹은 듯",            m:"어수선한 분위기가 사라지고 갑자기 조용해지는 상황", d:["물을 뿌리다","분위기가 좋아지다","시끄러워지다"]},
+  {e:"삼천포로 빠지다",           m:"일반적인 과정에서 전혀 엉뚱한 방향으로 진행되다", d:["여행을 떠나다","목적지에 도착하다","집중하다"]},
+  {e:"얼굴에 먹칠을 하다",        m:"체면이나 명예를 더럽히다",                      d:["그림을 그리다","명예를 높이다","얼굴을 꾸미다"]},
+  {e:"바가지를 긁다",             m:"불평이나 불만을 늘어놓으면서 잔소리를 하다",    d:["요리를 하다","칭찬하다","바가지를 씻다"]},
+  {e:"바가지를 쓰다",             m:"요금이나 물건값을 억울하게 손해를 보다",         d:["모자를 쓰다","싸게 사다","바가지를 쓰다"]},
+  {e:"까마귀 날자 배 떨어진다",   m:"우연히 동시에 일이 생겨서 관계가 있는 것처럼 의심받다", d:["까마귀가 배를 먹다","우연의 일치가 없다","새를 키우다"]},
+  {e:"찬물을 끼얹다",             m:"잘되어 가는 일에 뛰어들어 분위기를 흐리거나 훼방을 놓다", d:["물을 뿌리다","분위기를 좋게 하다","요리하다"]},
+  {e:"진땀을 빼다",               m:"어려운 일을 당하여 몹시 애를 쓰다",             d:["운동하다","편하게 쉬다","땀을 닦다"]},
+  {e:"엎드려 절 받기",            m:"상대방은 생각도 않는데 스스로 요구하여 대접을 받는 경우", d:["예의 바르게 인사하다","대접을 거부하다","절을 하다"]},
+  {e:"국물도 없다",               m:"아무것도 돌아오는 이득이 없다는 것을 비유적으로 이르는 말", d:["국이 맛없다","이득이 많다","음식이 없다"]},
+  {e:"구렁이 담 넘어가듯",        m:"일을 분명히 처리하지 않고 슬그머니 얼버무려 버리는 모양", d:["뱀이 담을 넘다","일을 확실히 하다","빠르게 처리하다"]},
+  {e:"하나를 보고 열을 안다",     m:"사물의 일부를 보고 전체를 미루어 알 수 있음",   d:["하나만 알면 된다","전체를 봐야 안다","수학을 잘한다"]},
+  {e:"입이 가볍다",               m:"말을 쉽게 함부로 해서 비밀을 잘 지키지 못한다",  d:["말을 잘 못하다","말수가 적다","말을 천천히 하다"]},
+];
+
+// ── 빈칸 채우기 데이터 (신체 부위) ──
+const BLANK = [
+  {q:"___ 이 번쩍 뜨이다",    a:"눈",  d:["귀","코","입"]},
+  {q:"___ 발이 맞다",          a:"손",  d:["발","팔","다리"]},
+  {q:"___ 이 넓다",            a:"발",  d:["손","눈","귀"]},
+  {q:"___ 이 동그래지다",      a:"눈",  d:["입","코","귀"]},
+  {q:"___ 이 식다",            a:"김",  d:["불","열","빛"]},
+  {q:"___ 떨어지다",           a:"간",  d:["눈","귀","코"]},
+  {q:"___ 이 크다 (씀씀이)",   a:"손",  d:["발","입","귀"]},
+  {q:"___ 이 가다 (사이)",     a:"금",  d:["선","줄","칸"]},
+  {q:"___ 이 크다 (대담)",     a:"간",  d:["손","배","등"]},
+  {q:"___ 가 얇다",            a:"귀",  d:["눈","코","입"]},
+  {q:"___ 에 띄다",            a:"눈",  d:["귀","손","발"]},
+  {q:"___ 이 타다",            a:"애간장",d:["마음","가슴","속"]},
+  {q:"___ 을 악물다",          a:"어금니",d:["이","턱","입"]},
+  {q:"___ 를 맞대다",          a:"머리",d:["손","발","어깨"]},
+  {q:"___ 벗고 나서다",        a:"발",  d:["옷","신발","양말"]},
+  {q:"___ 을 돌리다",          a:"눈",  d:["귀","발","손"]},
+  {q:"___ 을 붙이다 (잠)",     a:"눈",  d:["머리","귀","손"]},
+  {q:"___ 이 높다 (안목)",     a:"눈",  d:["코","귀","입"]},
+  {q:"___ 이 멀다",            a:"눈",  d:["귀","코","입"]},
+  {q:"___ 에 거슬리다",        a:"눈",  d:["귀","코","손"]},
+  {q:"___ 코 뜰 새 없다",      a:"눈",  d:["손","발","귀"]},
+  {q:"___ 에 불을 켜다",       a:"눈",  d:["손","발","귀"]},
+  {q:"___ 을 모으다",          a:"입",  d:["손","발","귀"]},
+  {q:"___ 을 막다",            a:"입",  d:["귀","코","눈"]},
+  {q:"___ 이 무겁다",          a:"입",  d:["귀","손","발"]},
+  {q:"___ 이 짧다 (음식)",     a:"입",  d:["손","눈","귀"]},
+  {q:"___ 을 맞추다 (의견)",   a:"입",  d:["손","발","눈"]},
+  {q:"___ 가 높다 (자존심)",   a:"코",  d:["눈","귀","입"]},
+  {q:"___ 가 꿰이다",          a:"코",  d:["귀","눈","입"]},
+  {q:"___ 끝이 찡하다",        a:"코",  d:["눈","귀","입"]},
+  {q:"___ 가 아프다 (듣기)",   a:"귀",  d:["눈","코","입"]},
+  {q:"___ 에 익다 (소리)",     a:"귀",  d:["눈","손","발"]},
+  {q:"___ 를 세우다 (듣기)",   a:"귀",  d:["눈","코","손"]},
+  {q:"___ 를 기울이다",        a:"귀",  d:["눈","손","발"]},
+  {q:"___ 청 떨어지다",        a:"귀",  d:["눈","코","입"]},
+  {q:"___ 에 익다 (일)",       a:"손",  d:["발","눈","귀"]},
+  {q:"___ 을 끊다 (관계)",     a:"손",  d:["발","눈","귀"]},
+  {q:"___ 바닥으로 하늘 가리기",a:"손", d:["발","눈","귀"]},
+  {q:"___ 을 구르다",          a:"발",  d:["손","눈","귀"]},
+  {q:"___ 을 끊다 (왕래)",     a:"발",  d:["손","눈","귀"]},
+  {q:"___ 을 빼다",            a:"발",  d:["손","눈","귀"]},
+  {q:"___ 바닥에 불이 나다",   a:"발",  d:["손","등","배"]},
+  {q:"___ 를 뻗고 자다",       a:"다리",d:["발","팔","손"]},
+  {q:"___ 을 걷어붙이다",      a:"팔",  d:["손","발","다리"]},
+  {q:"___ 이 부었다",          a:"간",  d:["배","등","눈"]},
+  {q:"___ 이 콩알만 해지다",   a:"간",  d:["눈","귀","코"]},
+  {q:"___ 에 기별도 안 가다",  a:"간",  d:["배","등","속"]},
+  {q:"___ 를 쥐어짜다",        a:"머리",d:["손","발","귀"]},
+  {q:"___ 를 식히다",          a:"머리",d:["손","발","귀"]},
+  {q:"___ 에 힘을 주다",       a:"목",  d:["손","발","귀"]},
+  {q:"___ 이 빠지다 (기다림)", a:"목",  d:["눈","귀","손"]},
+  {q:"___ 이 뜨겁다",          a:"얼굴",d:["손","발","귀"]},
+  {q:"___ 이 두껍다",          a:"얼굴",d:["손","귀","눈"]},
+  {q:"___ 를 내리다 (항복)",   a:"꼬리",d:["손","발","눈"]},
+  {q:"___ 에 꼬리를 물다",     a:"꼬리",d:["손","발","눈"]},
+];
+
+// ── 예문 보고 관용표현 찾기 ──
+const SITUATION = [
+  {q:"민준이는 시험에서 떨어졌다.",              a:"미역국 먹다",       d:["간이 크다","발이 넓다","눈이 높다"]},
+  {q:"선생님 말씀을 듣고 갑자기 놀랐다.",        a:"간 떨어지다",       d:["눈이 멀다","귀가 얇다","입이 짧다"]},
+  {q:"지호는 아는 친구가 정말 많다.",            a:"발이 넓다",         d:["손이 크다","귀가 얇다","입이 무겁다"]},
+  {q:"할머니는 음식을 항상 넉넉하게 만드신다.",  a:"손이 크다",         d:["발이 넓다","눈이 높다","입이 짧다"]},
+  {q:"수아는 비밀을 절대 말하지 않는다.",        a:"입이 무겁다",       d:["귀가 얇다","눈이 높다","발이 넓다"]},
+  {q:"민수는 남의 말을 너무 쉽게 믿는다.",      a:"귀가 얇다",         d:["입이 무겁다","손이 크다","눈이 높다"]},
+  {q:"지우는 음식을 가려 먹고 조금만 먹는다.",  a:"입이 짧다",         d:["손이 크다","눈이 높다","귀가 얇다"]},
+  {q:"형은 마음에 드는 짝이 없다고 한다.",      a:"눈이 높다",         d:["귀가 얇다","입이 짧다","발이 넓다"]},
+  {q:"둘이 함께 의논해서 방법을 찾았다.",       a:"머리를 맞대다",     d:["발 벗고 나서다","손발을 맞추다","눈을 돌리다"]},
+  {q:"선생님이 큰 소리로 말씀하셨다.",           a:"귀청 떨어지다",     d:["귀가 아프다","귀를 세우다","귀에 익다"]},
+  {q:"엄마가 도와달라고 하자 바로 나섰다.",      a:"발 벗고 나서다",    d:["발을 구르다","머리를 맞대다","손발을 맞추다"]},
+  {q:"용돈을 받자마자 다 써버렸다.",             a:"물 쓰듯 쓰다",      d:["손이 크다","입이 짧다","발이 넓다"]},
+  {q:"숙제를 하기 싫지만 억지로 참았다.",       a:"어금니를 악물다",   d:["이를 갈다","마음을 먹다","맥이 풀리다"]},
+  {q:"뉴스를 보고 갑자기 정신이 번쩍 들었다.", a:"눈이 번쩍 뜨이다",  d:["눈에 띄다","눈이 높다","눈에 차다"]},
+  {q:"한 사람에게만 말했는데 순식간에 온 학교에 소문이 났다.", a:"발 없는 말이 천리 간다", d:["낮말은 새가 듣고 밤말은 쥐가 듣는다","귀가 얇다","입이 무겁다"]},
+  {q:"오늘 발표를 앞두고 너무 긴장됐다.",       a:"마른 침을 삼키다",  d:["숨을 죽이다","맥이 풀리다","애간장이 타다"]},
+  {q:"경기에서 지고 나서 기운이 쭉 빠졌다.",   a:"맥이 풀리다",       d:["마른 침을 삼키다","어금니를 악물다","김이 식다"]},
+  {q:"시험 결과를 기다리며 마음이 타들어간다.", a:"애간장이 타다",     d:["마른 침을 삼키다","맥이 풀리다","숨을 죽이다"]},
+  {q:"선생님 눈치를 보며 아무 소리도 안 냈다.",a:"숨을 죽이다",       d:["귀를 세우다","눈을 돌리다","입을 막다"]},
+  {q:"발표 내용 중 한 부분이 유독 눈에 들어왔다.", a:"눈에 띄다",     d:["눈이 높다","눈에 차다","눈이 번쩍 뜨이다"]},
+  {q:"아이가 하루도 빠짐없이 장난을 친다.",    a:"하루에도 열두 번",  d:["꼬리가 길다","발바닥에 불이 나다","동에 번쩍 서에 번쩍하다"]},
+  {q:"선생님 말씀을 집중해서 들었다.",          a:"귀를 기울이다",     d:["귀를 세우다","귀에 익다","귀가 아프다"]},
+  {q:"엄마 잔소리가 너무 반복되어 듣기 싫다.", a:"귀가 아프다",       d:["귀가 얇다","귀청 떨어지다","귀에 익다"]},
+  {q:"이 노래는 자주 들어서 익숙하다.",         a:"귀에 익다",         d:["귀를 기울이다","귀가 아프다","귀를 세우다"]},
+  {q:"뒤에서 소리가 나서 긴장하며 들었다.",    a:"귀를 세우다",       d:["귀를 기울이다","귀에 익다","귀가 아프다"]},
+  {q:"여러 사람이 한 목소리로 칭찬했다.",           a:"입을 모으다",       d:["머리를 맞대다","손발을 맞추다","입을 맞추다"]},
+  {q:"증거가 있어서 변명을 못하게 됐다.",       a:"코가 꿰이다",       d:["꼬리를 내리다","시치미를 떼다","코를 납작하게 만들다"]},
+  {q:"이기던 팀이 갑자기 포기하고 물러났다.",  a:"꼬리를 내리다",     d:["발을 빼다","손을 끊다","맥이 풀리다"]},
+  {q:"지각을 하고도 안 한 것처럼 행동했다.",   a:"시치미를 떼다",     d:["꼬리를 내리다","코가 꿰이다","입을 막다"]},
+  {q:"밥을 너무 빠르게 먹어치웠다.",            a:"게 눈 감추듯",      d:["물 쓰듯 쓰다","입이 짧다","손이 크다"]},
+];
+
+// ── 문제 생성 ──
+const shuffle = arr => {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+};
+
+function generateProblem(mode) {
+  let question, answer, slots;
+
+  if (mode === 'blank') {
+    const picked = shuffle(BLANK)[0];
+    answer = picked.a;
+    slots = shuffle([picked.a, ...picked.d]);
+    question = picked.q;
+
+  } else if (mode === 'mean2expr') {
+    const picked = shuffle(ALL)[0];
+    question = '「' + picked.m + '」';
+    answer = picked.e;
+    slots = shuffle([picked.e, ...picked.d]);
+
+  } else { // situation
+    const picked = shuffle(SITUATION)[0];
+    answer = picked.a;
+    slots = shuffle([picked.a, ...picked.d]);
+    question = picked.q;
+  }
+
+  return { question, answer, slots };
+}
+
+// ── 상태 ──
+const State = {
+  mode: 'blank',
+  score: 0, combo: 0, maxCombo: 0,
+  lives: 3, level: 1,
+  correctCount: 0, wrongCount: 0,
+  current: null,
+  fallSpeed: 30,
+  blockY: 0,
+  running: false, paused: false,
+  lastFrame: 0, problemsAnswered: 0,
+  answering: false,
+};
+
+// ── 오디오 ──
+let audioCtx;
+function beep(freq, dur=0.08, type='square', vol=0.06) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type; osc.frequency.value = freq; gain.gain.value = vol;
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+    osc.stop(audioCtx.currentTime + dur);
+  } catch(e){}
+}
+const sndCorrect = () => { beep(660,0.08,'square'); setTimeout(()=>beep(880,0.10,'square'),70); };
+const sndWrong   = () => beep(180,0.18,'sawtooth',0.07);
+const sndCombo   = () => { beep(880,0.06); setTimeout(()=>beep(1100,0.06),60); setTimeout(()=>beep(1320,0.10),120); };
+const sndLevelUp = () => [523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,0.10),i*80));
+
+// ── 렌더 ──
+function renderProblem() {
+  fallingBlock.textContent = State.current.question;
+  fallingBlock.classList.remove('correct','wrong');
+  fallingBlock.style.opacity = '1';
+  slotEls.forEach((slot, i) => {
+    slot.classList.remove('correct','wrong','show-correct');
+    slot.querySelector('.slot-number').textContent = State.current.slots[i];
+  });
+  State.blockY = 0;
+  fallingBlock.style.top = '0px';
+  fallingBlock.style.left = '50%';
+  fallingBlock.style.transform = 'translateX(-50%)';
+}
+
+function updateHUD() {
+  scoreEl.textContent = State.score;
+  levelEl.textContent = State.level;
+  comboEl.textContent = '×' + State.combo;
+  const lv = Math.max(0, Math.min(5, State.lives));
+  livesEl.innerHTML = '♥'.repeat(lv) + '<span style="opacity:.2">♥</span>'.repeat(5 - lv);
+}
+
+// ── 게임 루프 ──
+let rafId = null;
+function loop(ts) {
+  if (!State.running || State.paused) { rafId = requestAnimationFrame(loop); return; }
+  const dt = State.lastFrame ? (ts - State.lastFrame) / 1000 : 0;
+  State.lastFrame = ts;
+
+  if (!State.answering) {
+    State.blockY += State.fallSpeed * dt;
+    fallingBlock.style.top = State.blockY + 'px';
+    const playH = playArea.clientHeight;
+    const blockH = 80; // 고정 높이 — offsetHeight 안 씀
+    if (State.blockY + blockH >= playH) {
+      State.answering = true;
+      handleAnswer(-1, true);
+    }
+  }
+
+  rafId = requestAnimationFrame(loop);
+}
+
+// ── 슬롯 클릭 ──
+function handleSlotClick(idx) {
+  if (!State.running || State.paused || State.answering) return;
+  if (fallingBlock.classList.contains('correct') || fallingBlock.classList.contains('wrong')) return;
+  State.answering = true;
+  const slot = slotEls[idx];
+  const slotRect = slot.getBoundingClientRect();
+  const playRect = playArea.getBoundingClientRect();
+  const targetLeft = (slotRect.left - playRect.left) + slotRect.width / 2;
+  fallingBlock.style.left = targetLeft + 'px';
+  fallingBlock.style.transform = 'translateX(-50%)';
+  setTimeout(() => handleAnswer(idx, false), 180);
+}
+
+function handleAnswer(idx, timedOut) {
+  if (!State.running || State.lives <= 0) return;
+  const correctValue = State.current.answer;
+  const chosenValue  = idx >= 0 ? State.current.slots[idx] : null;
+  const isCorrect = chosenValue === correctValue;
+  State.problemsAnswered++;
+
+  if (isCorrect) {
+    State.combo++;
+    State.maxCombo = Math.max(State.maxCombo, State.combo);
+    State.correctCount++;
+    const bonus = State.combo >= 3 ? (State.combo - 2) * 5 : 0;
+    State.score += 10 + bonus;
+    fallingBlock.classList.add('correct');
+    slotEls[idx].classList.add('correct');
+    sndCorrect();
+    if (State.combo >= 3 && State.combo % 3 === 0) { showComboBanner(State.combo + ' COMBO!'); sndCombo(); spawnConfetti(); }
+  } else {
+    State.combo = 0;
+    State.wrongCount++;
+    State.lives--;
+    fallingBlock.classList.add('wrong');
+    if (idx >= 0) slotEls[idx].classList.add('wrong');
+    const correctIdx = State.current.slots.indexOf(correctValue);
+    if (correctIdx >= 0) slotEls[correctIdx].classList.add('show-correct');
+    sndWrong();
+  }
+
+  updateHUD();
+
+  if (State.problemsAnswered % 10 === 0 && isCorrect) {
+    State.level++;
+    State.fallSpeed *= 1.12;
+    sndLevelUp();
+    showComboBanner('LEVEL ' + State.level + '!');
+  }
+
+  if (State.lives <= 0) { setTimeout(showGameOver, 900); return; }
+
+  const delay = isCorrect ? 500 : 1100;
+  setTimeout(() => {
+    // 정지 중이면 재개될 때까지 대기
+    const waitAndLoad = () => {
+      if (State.paused) { setTimeout(waitAndLoad, 200); return; }
+      State.current = generateProblem(State.mode);
+      State.blockY = 0;
+      fallingBlock.style.top = '0px';
+      fallingBlock.style.left = '50%';
+      fallingBlock.style.transform = 'translateX(-50%)';
+      renderProblem();
+      State.answering = false;
+    };
+    waitAndLoad();
+  }, delay);
+}
+
+function showComboBanner(text) {
+  comboBanner.textContent = text;
+  comboBanner.classList.remove('show');
+  void comboBanner.offsetWidth;
+  comboBanner.classList.add('show');
+}
+
+function spawnConfetti() {
+  const colors = ['#c5ff3d','#ff4d8a','#54d8ff','#ffc14d','#fff'];
+  for (let i = 0; i < 30; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.background = colors[i % colors.length];
+    const sx = window.innerWidth / 2 + (Math.random()-0.5)*100;
+    const sy = window.innerHeight / 2;
+    c.style.left = sx + 'px'; c.style.top = sy + 'px';
+    document.body.appendChild(c);
+    const angle = Math.random() * Math.PI * 2;
+    const dist  = 200 + Math.random() * 300;
+    c.animate([
+      { transform:'translate(0,0) rotate(0)', opacity:1 },
+      { transform:`translate(${Math.cos(angle)*dist}px,${Math.sin(angle)*dist-100+400}px) rotate(${720*Math.random()}deg)`, opacity:0 }
+    ], { duration:1400, easing:'cubic-bezier(0.2,0.7,0.4,1)' });
+    setTimeout(() => c.remove(), 1500);
+  }
+}
+
+// ── 게임 흐름 ──
+function startGame() {
+  Object.assign(State, {
+    score:0, combo:0, maxCombo:0, lives:5, level:1,
+    correctCount:0, wrongCount:0, fallSpeed:30,
+    problemsAnswered:0, running:true, paused:false, lastFrame:0, answering:false,
+    lives:5
+  });
+  startScreen.classList.remove('active');
+  gameoverScreen.classList.remove('active');
+  gameScreen.classList.add('active');
+  pauseBtn.style.display = 'block';
+  $('#signature').style.display = 'none';
+  State.current = generateProblem(State.mode);
+  renderProblem();
+  updateHUD();
+  if (rafId) cancelAnimationFrame(rafId);
+  rafId = requestAnimationFrame(loop);
+}
+
+function showGameOver() {
+  State.running = false;
+  gameScreen.classList.remove('active');
+  pauseBtn.style.display = 'none';
+  gameoverScreen.classList.add('active');
+  $('#signature').style.display = '';
+  $('#final-score').textContent    = State.score;
+  $('#stat-correct').textContent   = State.correctCount;
+  $('#stat-wrong').textContent     = State.wrongCount;
+  $('#stat-combo').textContent     = State.maxCombo;
+  $('#stat-level').textContent     = State.level;
+}
+
+function goHome() {
+  State.running = false;
+  gameoverScreen.classList.remove('active');
+  gameScreen.classList.remove('active');
+  pauseBtn.style.display = 'none';
+  startScreen.classList.add('active');
+  $('#signature').style.display = '';
+}
+
+// ── 이벤트 연결 ──
+$$('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    $$('.mode-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    State.mode = btn.dataset.mode;
+  });
+});
+
+function setPause(val) {
+  State.paused = val;
+  pauseBtn.textContent = val ? '▶' : 'II';
+  const overlay = $('#pause-overlay');
+  overlay.style.display = val ? 'flex' : 'none';
+  // 정지 시 lastFrame 초기화 → 재개 시 dt 튀는 현상 방지
+  if (!val) State.lastFrame = 0;
+}
+
+startBtn.addEventListener('click', startGame);
+retryBtn.addEventListener('click', startGame);
+homeBtn.addEventListener('click', goHome);
+
+$('#home-game-btn').addEventListener('click', () => {
+  setPause(false);
+  goHome();
+});
+
+slotEls.forEach((slot, i) => slot.addEventListener('click', () => handleSlotClick(i)));
+
+document.addEventListener('keydown', e => {
+  if (!State.running) return;
+  if (e.key >= '1' && e.key <= '4') handleSlotClick(parseInt(e.key)-1);
+  else if (e.key === ' ' || e.key === 'p' || e.key === 'P') {
+    setPause(!State.paused);
+  }
+});
+
+pauseBtn.addEventListener('click', () => setPause(!State.paused));
+</script>
+</body>
+</html>
